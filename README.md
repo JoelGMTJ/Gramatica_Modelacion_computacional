@@ -28,6 +28,7 @@ Mientras que para las preguntas abiertas se usa la siguiente estructura:
 
 ## Palabras que useré
 Las palabras que usaré son las siguientes:
+
 ### Sujetos 
 * `wo:` Yo
 * `ta:` El/ella
@@ -80,6 +81,9 @@ Las palabras que usaré son las siguientes:
 * `mianbao:` Pan
 * `pingguo:` Manzana
 * `kaoshi:` Examen
+
+## Estructuras de oraciones
+
 
 ## Referencias
 Jiameng, S. y Costa Vila, E. (2004). Hànyǔ 1: Chino para hispanohablantes. Libro de texto y cuaderno de ejercicios. Herder Editorial.
