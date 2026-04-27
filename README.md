@@ -89,10 +89,9 @@ Mientras que para las preguntas abiertas se usa la siguiente estructura:
 la gramática inicial ya puede modelar a nuestro lenguaje, o al menos las palabras y oraciones que declaramos. Se vería algo así 
 ```
 grammar = CFG.fromstring("""
-    Start -> OC | P
+    Start -> OS | P
     
-    OC -> OS 'he' OS | OS
-    OS -> S V O | S 'bu' V O
+    OS -> OS 'he' OS | S V O | S 'bu' V O
     
     P -> PSN | POM | PAB
     PSN -> OS 'ma' '?'
@@ -102,7 +101,7 @@ grammar = CFG.fromstring("""
     PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
     S -> S 'he' S | S 'men' | 'wo' | 'ta'
     V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
-    O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
+    O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
 """)
 ```
 Esta declaración es funcional, sin embargo tiene 2 principales problemas los cuales no nos dejarían usar un *parser* pues el lenguaje cuenta con ambiguedad y recursión a la izquierda.
@@ -114,6 +113,50 @@ Para definir la **ambiguedad** en una gramática libre de contexto, podemos ver 
 Entonces, mi gramática actualmente cuenta con ambiguedad en algunas partes, Básicamente en todos los lados donde se incluye el 'he' (and).
 
 En este estado, mi gramática libre de contexto tiene una complejidad de $O(n^3)$. esto basandonos en Chomsky y el cómo ordena la complejidad de diferentes gramáticas. Esto pues es un lenguaje el cual cuenta con varias ambiguedades y recursiones a la izquierda.
+
+En la forma actual de mi lenguaje, una misma oración:
+` wo shuo moxiguwen he ta shuo ingwen he ta men shuo zongwen:` *Yo hablo español, ella habla inglés y ellos hablan chino*
+nos da dos árboles de lenguaje
+![imagen con 2 arboles, demostrando ambiguedad](images/ambiguity.png)
+Esto es a causa de la ambiguedad de la oración. El parser no sabe si la oración proviene de:
+oracion + (oracion + oracion) o de
+(oracion + oracion) + oracion.
+
+## Eliminar ambiguedad
+Para eliminar esta ambiguedad, vamos a buscar las reglas que contengan ambiguedad.
+Las reglas que son ambiguas son las de la OracionSimple (OS), PreguntaOpciónMultiple (POM), Objetos (O) y Sujetos (S).
+
+Para eliminar esas ambiguedades, voy a agregar un nuevo elemento intermedio para todas estas reglas. Con esto el lugar de tener una sola regla que sea 
+```OS -> OS 'he' OS | S V O | S 'bu' V O``` va a pasar a ser 2 reglas 
+```
+OC -> OC 'he' OS | OS
+OS -> S V O | S 'bu' V O
+```
+Si eliminamos la recursión en el resto de gramáticas obtenemos la siguiente gramática:
+```
+grammar = CFG.fromstring("""
+    Start -> OS | P
+    
+    OC -> OC 'he' OS | OS
+    OS -> S V O | S 'bu' V O
+    
+    P -> PSN | POM | PAB
+    PSN -> OS 'ma' '?'
+    POM -> OC 'haishi' OS '?'
+    PAB -> S V PRNI '?'
+    
+    PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
+    SP -> SP 'he' SS | SS
+    SS -> S 'men' | 'wo' | 'ta'
+    V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
+    OP -> OP 'he' O | O
+    O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
+""")
+```
+Con esto mi lenguaje ya no cuenta con ambiguedad y ahora solamente falta eliminar la recursión por izquierda.
+
+## Eliminar la recursión por izquierda
+
 
 ## Referencias
 Jiameng, S. y Costa Vila, E. (2004). Hànyǔ 1: Chino para hispanohablantes. Libro de texto y cuaderno de ejercicios. Herder Editorial.

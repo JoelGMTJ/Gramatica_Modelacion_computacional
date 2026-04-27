@@ -7,21 +7,22 @@ nltk.download('punkt_tab')
 grammar = CFG.fromstring("""
     Start -> OC | P
     
-    OC -> OS 'he' OS | OS
-    OS -> S V O | S 'bu' V O
+    OC -> OC 'he' OS | OS
+    OS -> SP V OP | SP 'bu' V OP
     
     P -> PSN | POM | PAB
     PSN -> OS 'ma' '?'
-    POM -> OS 'haishi' OS '?'
-    PAB -> S V PRNI '?'
+    POM -> OC 'haishi' OS '?'
+    PAB -> SP V PRNI '?'
     
     PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
-    S -> S 'he' S | S 'men' | 'wo' | 'ta'
+    SP -> SP 'he' SS | SS
+    SS -> SS 'men' | 'wo' | 'ta'
     V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
-    O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
+    OP -> OP 'he' O | O
+    O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
 """)
 # Definicion de las letras que estoy usando en mi gramatica
-# OC -> Oracion compleja
 # OS -> Oracion simple
 
 # P -> Pregunta
@@ -48,7 +49,7 @@ oracionesPinyin = [
     "wo men hei pijiu he shui",
     "ta men kan shenme ?",
     "ta men he wo chi hanpaopao haishi ta men he wo chi bingqilin ?",
-    "wo bu mai quianbi"                               
+    "wo shuo moxiguwen he ta shuo ingwen he ta men shuo zongwen"                               
 ]
 
 def ejemplosOraciones():
@@ -57,7 +58,7 @@ def ejemplosOraciones():
         print("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
         tokens = nltk.word_tokenize(oracion)
         # Parse the sentence
-        print("Arbol(es) de la oracion: " + oracion)
+        print("Arbol de la oracion: " + oracion)
         for tree in parser.parse(tokens):
             tree.pretty_print()
 
