@@ -17,9 +17,10 @@ grammar = CFG.fromstring("""
     
     PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
     S -> S 'he' S | S 'men' | 'wo' | 'ta'
-    V -> 'shi' | 'chi' | 'xue_xi' | 'he' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
+    V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
     O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
 """)
+# Definicion de las letras que estoy usando en mi gramatica
 # OC -> Oracion compleja
 # OS -> Oracion simple
 
@@ -37,24 +38,27 @@ grammar = CFG.fromstring("""
 parser = nltk.ChartParser(grammar)
 
 # Ejemplos de oraciones
-oraciones = [
+oracionesPinyin = [
     "wo xue_xi moxiguwen haishi wo xue_xi yinyue ?",
     "ta men bu chi hanpaopao",                      
     "wo he ta chi fan he bingqilin",                
     "ta men kan dianying ma ?",                     
     "ta zuo shenme ?",
     "wo he ta men shi moxiguren",
-    "",
-    "",
-    "",
-    ""                               
+    "wo men hei pijiu he shui",
+    "ta men kan shenme ?",
+    "ta men he wo chi hanpaopao haishi ta men he wo chi bingqilin ?",
+    "wo bu mai quianbi"                               
 ]
 
-# Tokenize the sentence
-for oracion in oraciones:
-    print()
-    tokens = nltk.word_tokenize(oracion)
-    # Parse the sentence
-    print("Arbol(es) de la oracion: " + oracion)
-    for tree in parser.parse(tokens):
-        tree.pretty_print()
+def ejemplosOraciones():
+    for oracion in oracionesPinyin:
+        print()
+        print("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
+        tokens = nltk.word_tokenize(oracion)
+        # Parse the sentence
+        print("Arbol(es) de la oracion: " + oracion)
+        for tree in parser.parse(tokens):
+            tree.pretty_print()
+
+ejemplosOraciones()
