@@ -18,7 +18,7 @@ grammar = CFG.fromstring("""
     PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
     S -> S 'he' S | S 'men' | 'wo' | 'ta'
     V -> 'shi' | 'chi' | 'xue_xi' | 'he' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
-    O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi'
+    O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
 """)
 # OC -> Oracion compleja
 # OS -> Oracion simple
@@ -39,17 +39,22 @@ parser = nltk.ChartParser(grammar)
 # Ejemplos de oraciones
 oraciones = [
     "wo xue_xi moxiguwen haishi wo xue_xi yinyue ?",
+    "ta men bu chi hanpaopao",                      
+    "wo he ta chi fan he bingqilin",                
+    "ta men kan dianying ma ?",                     
+    "ta zuo shenme ?",
+    "wo he ta men shi moxiguren",
     "",
-    "wo chi fan",
-    "wo chi fan",
-    "wo chi fan"
-    ]
+    "",
+    "",
+    ""                               
+]
 
 # Tokenize the sentence
-i = 0
-while (i < 5):
-    tokens = nltk.word_tokenize(oraciones[i])
+for oracion in oraciones:
+    print()
+    tokens = nltk.word_tokenize(oracion)
     # Parse the sentence
+    print("Arbol(es) de la oracion: " + oracion)
     for tree in parser.parse(tokens):
         tree.pretty_print()
-        i += 1

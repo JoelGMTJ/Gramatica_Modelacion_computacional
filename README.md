@@ -66,6 +66,7 @@ Las palabras que usaré son las siguientes:
 * `mianbao:` Pan
 * `pingguo:` Manzana
 * `kaoshi:` Examen
+* `moxiguren:` Mexicano
 
 ## Estructuras de oraciones
 Las principales estructuras que voy a usar para mi lenguaje son las siguientes:
