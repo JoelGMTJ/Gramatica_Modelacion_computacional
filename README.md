@@ -147,7 +147,7 @@ grammar = CFG.fromstring("""
     
     PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
     SP -> SP 'he' SS | SS
-    SS -> S 'men' | 'wo' | 'ta'
+    SS -> SS 'men' | 'wo' | 'ta'
     V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
     OP -> OP 'he' O | O
     O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
@@ -156,7 +156,55 @@ grammar = CFG.fromstring("""
 Con esto mi lenguaje ya no cuenta con ambiguedad y ahora solamente falta eliminar la recursión por izquierda.
 
 ## Eliminar la recursión por izquierda
+También sé que tengo recursión por izquierda pues tengo varias reglas donde la definición de una partícula no terminal aparece al inicio de la definición de sí misma, por lo que voy a tener que cambiar las reglas de mi gramática una vez más.
 
+Para eliminar la recursión por izquierda me voy a basar en la fórmula: 
+$A -> A\alpha | \beta$ 
+Se convierte en 
+$A -> \beta A'$
+$A' -> \alpha A' | \epsilon$
+
+Un ejemplo de cómo se aplicaría esta fórmlua es en la siguiente regla:
+Pasa de ser 
+```OC -> OC 'he' OS | OS```
+A ser
+```
+OC -> OS OC_A
+OC_A -> 'he' OS OC_A | 
+```
+Entonces ahora sin la recursión a la izquierda mi lenguaje se ve de la siguiente forma:
+```
+grammar = CFG.fromstring("""
+    Start -> OC | P
+    
+    OC -> OS OC_A
+    OC_A -> 'he' OS OC_A | 
+    
+    OS -> SP V OP | SP 'bu' V OP
+    
+    P -> PSN | POM | PAB
+    PSN -> OS 'ma' '?'
+    POM -> OC 'haishi' OS '?'
+    PAB -> SP V PRNI '?'
+    
+    PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
+    
+    SP -> SS SP_A
+    SP_A -> 'he' SS SP_A | 
+    
+    SS -> SB SS_A
+    SS_A -> 'men' SS_A | 
+    
+    SB -> 'wo' | 'ta'
+    
+    V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
+    
+    OP -> O OP_A 
+    OP_A -> 'he' O OP_A |
+    
+    O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
+""")
+```
 
 ## Referencias
 Jiameng, S. y Costa Vila, E. (2004). Hànyǔ 1: Chino para hispanohablantes. Libro de texto y cuaderno de ejercicios. Herder Editorial.
