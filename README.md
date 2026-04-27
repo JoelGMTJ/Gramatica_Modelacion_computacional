@@ -12,40 +12,25 @@ También mencionar que para poder modelar el sistema y que no cause problemas co
 "El sistema de transcripción fonética del chino mandarín mediante el alfabeto latino" (Jiameng, 2004).
 Este sistema usa acentos (ō, ó, ǒ, ò) para denotar la pronunciación y los diferentes tonos de las palabras, sin embargo, van a ser omitidos por la misma razón que pueden causar problemas con las diversas herramientas que pueda usar.
 
-### Oraciones simples
-Una oración simple lleva el formato de:
-`Sujeto + verbo + sujeto`
-Y una oración negativa lleva el siguiente formato:
-`Sujeto + 'bu' + verbo + sujeto`
-
-### Oración interrogativa si/no
-La estructura para una oración de interrogativa de si/no es la siguiente:
-`Oración simple positiva + 'ma' + '?'`
-Otra estructura es la de 'Qué prefieres' la cual es:
-`Oración simple + 'haishi' + oración simple + '?'`
-Mientras que para las preguntas abiertas se usa la siguiente estructura:
-`Palabra interrogativa + oración simple + '?'`
-
 ## Palabras que useré
 Las palabras que usaré son las siguientes:
 
 ### Sujetos 
 * `wo:` Yo
 * `ta:` El/ella
-* `women:` Nosotros
-* `tamen:` Ellas/ellos
+* `men:` *Partícula que si la agregas a algún sujeto lo vuelves plural, por ejemplo 'women' se vuelve nosotros y 'tamen' se vuelve ellos/ellas*
 
 ### Extras
 * `he:` Y (and)
 * `haishi:` O (or)
-* `ma:` *Partícula que vuelve una oración en pregunta*
 * `bu:` No
+* `ma:` *Partícula que vuelve una oración en pregunta*
 
 ### Pronombres interrogativos
 * `shenme:` ¿Qué?
 * `nali:` ¿Dónde?
-* `weishenme:` ¿Por qué?
 * `zenme:` ¿Cómo?
+* `weishenme:` ¿Por qué?
 
 ### Verbos
 * `shi:` Ser
@@ -83,6 +68,22 @@ Las palabras que usaré son las siguientes:
 * `kaoshi:` Examen
 
 ## Estructuras de oraciones
+Las principales estructuras que voy a usar para mi lenguaje son las siguientes:
+
+### Oraciones simples
+Una oración simple lleva el formato de:
+`Sujeto + verbo + sujeto`
+Y una oración negativa lleva el siguiente formato:
+`Sujeto + 'bu' + verbo + sujeto`
+
+### Oración interrogativa 
+La estructura para una oración de interrogativa de si/no es la siguiente:
+`Oración simple positiva + 'ma' + '?'`
+Otra estructura es la de 'Qué prefieres' la cual es:
+`Oración simple + 'haishi' + oración simple + '?'`
+Mientras que para las preguntas abiertas se usa la siguiente estructura:
+`Palabra interrogativa + oración simple + '?'`
+
 
 
 ## Referencias
