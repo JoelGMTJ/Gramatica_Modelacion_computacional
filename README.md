@@ -85,7 +85,37 @@ Otra estructura es la de 'Qué prefieres' la cual es:
 Mientras que para las preguntas abiertas se usa la siguiente estructura:
 `Sujeto + verbo + Palabra interrogativa + '?'`
 
+## Revisión de gramática inicial
+la gramática inicial ya puede modelar a nuestro lenguaje, o al menos las palabras y oraciones que declaramos. Se vería algo así 
+```
+grammar = CFG.fromstring("""
+    Start -> OC | P
+    
+    OC -> OS 'he' OS | OS
+    OS -> S V O | S 'bu' V O
+    
+    P -> PSN | POM | PAB
+    PSN -> OS 'ma' '?'
+    POM -> OS 'haishi' OS '?'
+    PAB -> S V PRNI '?'
+    
+    PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
+    S -> S 'he' S | S 'men' | 'wo' | 'ta'
+    V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
+    O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
+""")
+```
+Esta declaración es funcional, sin embargo tiene 2 principales problemas los cuales no nos dejarían usar un *parser* pues el lenguaje cuenta con ambiguedad y recursión a la izquierda.
 
+Para definir la **ambiguedad** en una gramática libre de contexto, podemos ver la siguiente definición: 
+> A cfg is said to be ambiguous if there are two distinct leftmost derivations for some word
+
+(Hopcroft 2006)
+Entonces, mi gramática actualmente cuenta con ambiguedad en algunas partes, Básicamente en todos los lados donde se incluye el 'he' (and).
+
+En este estado, mi gramática libre de contexto tiene una complejidad de $O(n^3)$. esto basandonos en Chomsky y el cómo ordena la complejidad de diferentes gramáticas. Esto pues es un lenguaje el cual cuenta con varias ambiguedades y recursiones a la izquierda.
 
 ## Referencias
 Jiameng, S. y Costa Vila, E. (2004). Hànyǔ 1: Chino para hispanohablantes. Libro de texto y cuaderno de ejercicios. Herder Editorial.
+
+John E. Hopcroft, & Jeffrey D. Ullman(2006). Introduction to automata theory, languages, and computation (3rd ed.). Pearson.
