@@ -76,16 +76,24 @@ Las principales estructuras que voy a usar para mi lenguaje son las siguientes:
 
 ### Oraciones simples
 Una oración simple lleva el formato de:
+
 `Sujeto + verbo + objeto`
+
 Y una oración negativa lleva el siguiente formato:
+
 `Sujeto + 'bu' + verbo + objeto`
 
 ### Oración interrogativa 
 La estructura para una oración de interrogativa de si/no es la siguiente:
+
 `Oración simple positiva + 'ma' + '?'`
+
 Otra estructura es la de 'Qué prefieres' la cual es:
+
 `Oración simple + 'haishi' + oración simple + '?'`
+
 Mientras que para las preguntas abiertas se usa la siguiente estructura:
+
 `Sujeto + verbo + Palabra interrogativa + '?'`
 
 ## Revisión de gramática
