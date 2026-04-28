@@ -101,7 +101,7 @@ grammar = CFG.fromstring("""
     PRNI -> 'shenme' | 'nali' | 'zenme' | 'weishenme'
     S -> S 'he' S | S 'men' | 'wo' | 'ta'
     V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
-    O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
+    O -> O 'he' O | 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren' | 'chang'
 """)
 ```
 Esta declaración es funcional, sin embargo tiene 2 principales problemas los cuales no nos dejarían usar un *parser* pues el lenguaje cuenta con ambiguedad y recursión a la izquierda.
@@ -150,7 +150,7 @@ grammar = CFG.fromstring("""
     SS -> SS 'men' | 'wo' | 'ta'
     V -> 'shi' | 'chi' | 'xue_xi' | 'hei' | 'kan' | 'ting' | 'shuo' | 'xie' | 'qu' | 'lai' | 'zuo' | 'mai' | 'gong_zuo'
     OP -> OP 'he' O | O
-    O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
+    O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren' | 'chang'
 """)
 ```
 Con esto mi lenguaje ya no cuenta con ambiguedad y ahora solamente falta eliminar la recursión por izquierda.
@@ -158,7 +158,7 @@ Con esto mi lenguaje ya no cuenta con ambiguedad y ahora solamente falta elimina
 ### Eliminar la recursión por izquierda
 También sé que tengo recursión por izquierda pues tengo varias reglas donde la definición de una partícula no terminal aparece al inicio de la definición de sí misma, por lo que voy a tener que cambiar las reglas de mi gramática una vez más.
 
-Para eliminar la recursión por izquierda me voy a basar en la fórmula: 
+Para eliminar la recursión por izquierda me voy a basar en la fórmula de (Dragon Book 2007): 
 $A -> A\alpha | \beta$ 
 Se convierte en 
 $A -> \beta A'$
@@ -202,10 +202,13 @@ grammar = CFG.fromstring("""
     OP -> O OP_A 
     OP_A -> 'he' O OP_A |
     
-    O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
+    O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren' | 'chang'
 """)
 ```
 Con esto ya no tenemos ninguna recursión a la izquierda y estoy seguro que cuando use un parser LL(1) ya solamente me va a generar un árbol.
+
+## Complejidad final
+Ahora con estas implementaciones del lenguaje, podemos asegurarnos que el lenguaje tiene una complejidad de O(n). Esto es pues aunque la tabla de complejidad de Chomsky menciona que los lenguajes libres de contexto son $O(n^3)$, con las modificaciones que hemos agregado nos aseguramos que si lo analiza un LL(1), solamente va a tener que recorrer una vez la oración, por lo que no tiene que buscar en casos alternos ni otras cosas que le agregen complejidad a al lenguaje.
 
 ## Implementación
 Para implementarlo, escribí algunas oraciones de ejemplo en pinyin, las cuales son las siguientes:
@@ -216,7 +219,7 @@ Oraciones Simples (OS)
 
 Oraciones Complejas (OC)
 * **wo kan dianying he ta ting yinyue**: Yo veo una película y él escucha música.
-* **wo men zuo kaoshi he ta men gong_zuo**: Nosotros hacemos un examen y ellos trabajan.
+* **wo men zuo kaoshi he ta men gong_zuo chang**: Nosotros hacemos un examen y ellos trabajan en la fábrica.
 * **wo shuo moxiguwen he ta shuo ingwen he ta men shuo zongwen**: Yo hablo español, y él habla inglés, y ellos hablan chino.
 
 Preguntas Sí/No (PSN)
@@ -234,7 +237,13 @@ Preguntas Abiertas (PAB)
 * **wo men qu nali ?**: ¿Nosotros a dónde vamos?
 * **ta zuo zenme ?**: ¿Él cómo lo hace?
 
+Ahora con el archivo, lo puedes correr con el compilador de Python y así observar todos los árboles de las oraciones, adjunto algunos ejemplos de árboles generados:
+Tu estás comiendo una manzana - ta chi pingguo
+![Árbol de oracion 1](images/example1.png)
+
 ## Referencias
 Jiameng, S. y Costa Vila, E. (2004). Hànyǔ 1: Chino para hispanohablantes. Libro de texto y cuaderno de ejercicios. Herder Editorial.
 
 John E. Hopcroft, & Jeffrey D. Ullman(2006). Introduction to automata theory, languages, and computation (3rd ed.). Pearson.
+
+Aho, A. V., Lam, M. S., Sethi, R., y Ullman, J. D. (2007). Compilers: Principles, Techniques, and Tools (2.ª ed.). Pearson Education.
