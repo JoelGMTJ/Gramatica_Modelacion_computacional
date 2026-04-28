@@ -19,6 +19,7 @@ Las palabras que usaré son las siguientes:
 * `wo:` Yo
 * `ta:` El/ella
 * `men:` *Partícula que si la agregas a algún sujeto lo vuelves plural, por ejemplo 'women' se vuelve nosotros y 'tamen' se vuelve ellos/ellas*
+Mientras que la implementación correcta sería juntar las partículas 'wo' y 'ta' con 'men' sin dejar espacio, para agregar un punto donde se genere ambiguedad y recursión a la izquierda, voy a asumir que tienes que agregar el espacio.
 
 ### Extras
 * `he:` Y (and)
@@ -60,13 +61,15 @@ Las palabras que usaré son las siguientes:
 * `dianying:` Película
 * `yinyue:` Música
 * `hanzi:` Caracteres chinos
-* `moxiguwen:` Español
-* `ingwen:` Inglés
+* `moxiguwen:` Idioma español
+* `zongwen:` Idioma chino
+* `ingwen:` Idioma inglés
 * `dongxi:` Cosa / Objeto
 * `mianbao:` Pan
 * `pingguo:` Manzana
 * `kaoshi:` Examen
 * `moxiguren:` Mexicano
+* `chang:` Fábrica
 
 ## Estructuras de oraciones
 Las principales estructuras que voy a usar para mi lenguaje son las siguientes:
@@ -240,6 +243,10 @@ Preguntas Abiertas (PAB)
 Ahora con el archivo, lo puedes correr con el compilador de Python y así observar todos los árboles de las oraciones, adjunto algunos ejemplos de árboles generados:
 Tu estás comiendo una manzana - ta chi pingguo
 ![Árbol de oracion 1](images/example1.png)
+¿Ellas qué estudian? - ta men xue_xi shenme ?
+![Árbol de oración 2](images/example2.png)
+Nosotros bebemos te o bebemos agua - wo men hei cha haishi wo men hei shui ?
+![alt text](images/example3.png)
 
 ## Referencias
 Jiameng, S. y Costa Vila, E. (2004). Hànyǔ 1: Chino para hispanohablantes. Libro de texto y cuaderno de ejercicios. Herder Editorial.
