@@ -85,7 +85,7 @@ Otra estructura es la de 'Qué prefieres' la cual es:
 Mientras que para las preguntas abiertas se usa la siguiente estructura:
 `Sujeto + verbo + Palabra interrogativa + '?'`
 
-## Revisión de gramática inicial
+## Revisión de gramática
 la gramática inicial ya puede modelar a nuestro lenguaje, o al menos las palabras y oraciones que declaramos. Se vería algo así 
 ```
 grammar = CFG.fromstring("""
@@ -122,7 +122,7 @@ Esto es a causa de la ambiguedad de la oración. El parser no sabe si la oració
 oracion + (oracion + oracion) o de
 (oracion + oracion) + oracion.
 
-## Eliminar ambiguedad
+### Eliminar ambiguedad
 Para eliminar esta ambiguedad, vamos a buscar las reglas que contengan ambiguedad.
 Las reglas que son ambiguas son las de la OracionSimple (OS), PreguntaOpciónMultiple (POM), Objetos (O) y Sujetos (S).
 
@@ -155,7 +155,7 @@ grammar = CFG.fromstring("""
 ```
 Con esto mi lenguaje ya no cuenta con ambiguedad y ahora solamente falta eliminar la recursión por izquierda.
 
-## Eliminar la recursión por izquierda
+### Eliminar la recursión por izquierda
 También sé que tengo recursión por izquierda pues tengo varias reglas donde la definición de una partícula no terminal aparece al inicio de la definición de sí misma, por lo que voy a tener que cambiar las reglas de mi gramática una vez más.
 
 Para eliminar la recursión por izquierda me voy a basar en la fórmula: 
@@ -205,6 +205,34 @@ grammar = CFG.fromstring("""
     O -> 'fan' | 'hanpaopao' | 'bingqilin' | 'shui' | 'cha' | 'kafei' | 'pijiu' | 'shu' | 'quianbi' | 'dianying' | 'yinyue' | 'hanzi' | 'moxiguwen' | 'zongwen' | 'ingwen' | 'dongxi' | 'mianbao' | 'pingguo' | 'kaoshi' | 'moxiguren'
 """)
 ```
+Con esto ya no tenemos ninguna recursión a la izquierda y estoy seguro que cuando use un parser LL(1) ya solamente me va a generar un árbol.
+
+## Implementación
+Para implementarlo, escribí algunas oraciones de ejemplo en pinyin, las cuales son las siguientes:
+Oraciones Simples (OS)
+* **ta chi pingguo**: Él come manzana.
+* **wo men bu xie hanzi**: Nosotros no escribimos caracteres chinos.
+* **ta men mai mianbao**: Ellos compran pan.
+
+Oraciones Complejas (OC)
+* **wo kan dianying he ta ting yinyue**: Yo veo una película y él escucha música.
+* **wo men zuo kaoshi he ta men gong_zuo**: Nosotros hacemos un examen y ellos trabajan.
+* **wo shuo moxiguwen he ta shuo ingwen he ta men shuo zongwen**: Yo hablo español, y él habla inglés, y ellos hablan chino.
+
+Preguntas Sí/No (PSN)
+* **ta chi bingqilin ma ?**: ¿Él come helado?
+* **wo men xue_xi zongwen ma ?**: ¿Nosotros estudiamos chino?
+* **ta men hei kafei ma ?**: ¿Ellos beben café?
+
+Preguntas de Opción Múltiple (POM)
+* **ta chi fan haishi ta chi hanpaopao ?**: ¿Él come arroz o él come hamburguesa?
+* **wo men hei cha haishi wo men hei shui ?**: ¿Nosotros bebemos té o nosotros bebemos agua?
+* **ta men kan shu haishi ta men kan dianying ?**: ¿Ellos leen un libro o ellos ven una película?
+
+Preguntas Abiertas (PAB)
+* **ta men xue_xi shenme ?**: ¿Ellas qué estudian?
+* **wo men qu nali ?**: ¿Nosotros a dónde vamos?
+* **ta zuo zenme ?**: ¿Él cómo lo hace?
 
 ## Referencias
 Jiameng, S. y Costa Vila, E. (2004). Hànyǔ 1: Chino para hispanohablantes. Libro de texto y cuaderno de ejercicios. Herder Editorial.

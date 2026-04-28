@@ -52,16 +52,23 @@ parser = nltk.ChartParser(grammar)
 
 # Ejemplos de oraciones
 oracionesPinyin = [
-    "wo xue_xi moxiguwen haishi wo xue_xi yinyue ?",
-    "ta men bu chi hanpaopao",                      
-    "wo he ta chi fan he bingqilin",                
-    "ta men kan dianying ma ?",                     
-    "ta zuo shenme ?",
-    "wo he ta men shi moxiguren",
-    "wo men hei pijiu he shui",
-    "ta men kan shenme ?",
-    "ta men he wo chi hanpaopao haishi ta men he wo chi bingqilin ?",
-    "wo shuo moxiguwen he ta shuo ingwen he ta men shuo zongwen"                               
+    # Oraciones Simples (OS)
+    "ta chi pingguo",
+    "wo men bu xie hanzi",
+    "ta men mai mianbao",
+    "wo kan dianying he ta ting yinyue",
+    "wo men zuo kaoshi he ta men gong_zuo",
+    "ta men shuo ingwen he wo men shuo zongwen",
+    "wo shuo moxiguwen he ta shuo ingwen he ta men shuo zongwen",
+    "ta chi bingqilin ma ?",
+    "wo men xue_xi zongwen ma ?",
+    "ta men hei kafei ma ?",
+    "ta chi fan haishi ta chi hanpaopao ?",
+    "wo men hei cha haishi wo men hei shui ?",
+    "ta men kan shu haishi ta men kan dianying ?",
+    "ta men xue_xi shenme ?",
+    "wo men qu nali ?",
+    "ta zuo zenme ?"
 ]
 
 def ejemplosOraciones():
