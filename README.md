@@ -248,6 +248,13 @@ Tu estás comiendo una manzana - ta chi pingguo
 Nosotros bebemos te o bebemos agua - wo men hei cha haishi wo men hei shui ?
 ![alt text](images/example3.png)
 
+Igualmente agregué algunas oraciones las cuales no pueden generar un árbol pues tienen la gramática incorrecta:
+chi ta pingguo - Comer ella manzana - La gramática es incorrecta, el sujeto debe ir antes del verbo
+ta men bu - Ellos no - oración incompleta
+
+## Conclusion
+Ahora con esto, ya tenemos la modelación de un lenguaje el cual acepta todas las oraciones que cumplan con las reglas establecidas y solamente se conformen de las palabras especificadas
+
 ## Referencias
 Jiameng, S. y Costa Vila, E. (2004). Hànyǔ 1: Chino para hispanohablantes. Libro de texto y cuaderno de ejercicios. Herder Editorial.
 

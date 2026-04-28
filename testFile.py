@@ -81,25 +81,24 @@ oracionesIncorrectas = [
 def generarArboles(oraciones):
     for oracion in oraciones:
         print()
-        print("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
+        print("--------------------------------------------------------------------------------------------------")
         tokens = nltk.word_tokenize(oracion)
-        print("Arbol de la oracion: " + oracion)
         trees = list(parser.parse(tokens))
         if trees:
+            print("Arbol de la oracion: " + oracion)
             for tree in trees:
                 tree.pretty_print()
         else:
             print("No se pudo generar un árbol para: " + oracion)
 
-print("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
+print("--------------------------------------------------------------------------------------------------")
 print("Las siguiente oraciones deberian de generar el arbol correctamente")
 generarArboles(oracionesCorrectas)
-print("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
+print("--------------------------------------------------------------------------------------------------")
 
-print("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
 print("Las siguientes oraciones no deberian de generar un arbol pues tienen algun defecto")
 generarArboles(oracionesIncorrectas)
-print("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_")
+print("------------------------------------------------------------------------------------------------------")
 
 
 print("\nIntenta escribir una oracion para ver su arbol")
